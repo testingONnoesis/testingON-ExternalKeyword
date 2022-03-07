@@ -38,25 +38,24 @@ public class Main {
 			//WebElement element = getElement(xpath,driver);
 			//element.click();
 			
-			//if the step is OK, response with ->  System.out.prinln("Passed");
+			//if the step is OK, response with "Passed" ->  System.out.prinln("Passed");
 			if(passed){
 				System.out.println("Passed");
 			}
-			//if the step Fails, response with ->  System.out.prinln("Failed");
+			//if the step Fails, response with something else than "Passed" ->  System.out.prinln("Write the error");
 			else{
-				System.out.println("Failed");
+				System.out.println("Error Message..");
 			}
 			return;
 		    
 	    
 		}catch(Exception e){
 			System.out.println(e.getMessage());
-			System.out.println("Failed");
 		}
 
 	}
 	
-	private static WebElement getElement(String xpath, WebDriver driver){
+	private static WebElement getElement(String xpath, WebDriver driver) throws Exception{
 		
 		try {
 			WebElement element = null;
@@ -65,14 +64,14 @@ public class Main {
 			try {
 				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
 			} catch (Exception e) {				
-				return null;
+				throw new Exception("Element not found: " + e.getMessage());
 			}
 			
 			element = driver.findElement(By.xpath(xpath));
 			            
 			return element;
 		} catch (NoSuchElementException e) {			
-			return null;
+			throw new Exception("Element not found: " + e.getMessage());
 		}
 	}
 }
